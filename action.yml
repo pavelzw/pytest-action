@@ -1,0 +1,53 @@
+name: 'Run pytest'
+description: GitHub Action to run pytest tests with GitHub Job Summaries support.
+author: Pavel Zwerschke
+branding: 
+  icon: file-text
+  color: 'blue'
+inputs:
+  job_summary:
+    description: Print a GitHub job summary
+    required: false
+    default: 'true'
+  verbose:
+    description: Verbose output
+    required: false
+    default: 'true'
+  emoji:
+    description: Use emojis in the output
+    required: false
+    default: 'true'
+  custom_arguments:
+    description: Custom arguments to pass to pytest
+    required: false
+    default: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Install Python dependencies
+      run: |
+        echo "::group::Installing Python dependencies"
+        python -m pip install --upgrade pip
+        python -m pip install pytest
+
+        if [ ${{ inputs.job_summary }} = true ]; then pip install pytest-md; fi
+        if [ ${{ inputs.emoji }} = true ]; then pip install pytest-emoji; fi
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        echo "::endgroup::"
+      shell: bash
+    - name: Run pytest
+      run: |
+        args=()
+        if [ ${{ inputs.verbose }} = true ]; then args+=('-v'); fi
+        if [ ${{ inputs.job_summary }} = true ]; then args+=('--md=report.md'); fi
+        if [ ${{ inputs.emoji }} = true ]; then args+=('--emoji'); fi
+        args+=("${{ inputs.custom_arguments }}")
+        echo "::group::Run pytest ${args[@]}"
+        pytest "${args[@]}"
+        echo "::endgroup::"
+      shell: bash
+    - name: Add report to summary
+      # run even if pytest fails
+      if: always() && inputs.job_summary == 'true'
+      run: cat report.md >> $GITHUB_STEP_SUMMARY
+      shell: bash
