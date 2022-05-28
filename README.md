@@ -12,7 +12,7 @@ This GitHub Action allows you to run pytest and output [GitHub Job Summaries](ht
     custom_arguments: '-q'
 ```
 
-You need to have Python installed in your pipeline before you can run this action.
+You need to have Python as well as pytest installed in your pipeline before you can run this action. If `job_summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
 
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
@@ -24,6 +24,31 @@ If you want to change the time zone of the job summary, you may want to use the 
 
 When `job_summary` is set to `true`, the action will output a Job Summary.
 ![Example Job Summary](https://user-images.githubusercontent.com/29506042/170843320-2bb104c5-5284-4fff-a83c-525da58a1a7f.png)
+
+## Activating conda environments
+
+This Action uses `bash -l {0}` as the shell to run pytest in, 
+i.e., the login shell that also sources your `.bashrc`. 
+When using `bash` in GitHub Actions, it doesn't source your `.bashrc` by default. 
+If you want to use a conda environment, you need to make sure to add it into your `.bashrc` s.t. 
+the conda environment automatically gets activated. 
+[mamba-org/provision-with-micromamba](https://github.com/mamba-org/provision-with-micromamba) 
+does this automatically for you.
+
+```bash
+- uses: mamba-org/provision-with-micromamba@main
+  with:
+    environment-name: myenv
+    channels: conda-forge
+    environment-file: false
+    extra-specs: |
+      python=3.7
+      pytest
+      numpy
+- run: pip install pytest-md pytest-emoji
+  shell: bash -l {0}
+- uses: pavelzw/pytest-action@v1
+```
 
 ## Example Usage
 
@@ -49,7 +74,9 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-      - uses: pavelzw/pytest-action@test
+      - name: Install dependencies
+        run: pip install pytest pytest-md pytest-emoji
+      - uses: pavelzw/pytest-action@v1
         with:
           emoji: false
           verbose: false
