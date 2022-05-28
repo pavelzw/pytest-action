@@ -1,0 +1,19 @@
+name: Run Python tests
+
+on: [push]
+
+jobs:
+  build:
+    name: Run tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: szenius/set-timezone@v1.0
+        with:
+          timezoneLinux: 'Europe/Berlin'
+      - uses: actions/checkout@v3
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v3
+        with:
+          python-version: '3.x'
+      - uses: pavelzw/pytest-action@v1
