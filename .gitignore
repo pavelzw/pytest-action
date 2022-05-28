@@ -1,0 +1,6 @@
+**/__pycache__/
+**/report.md
+**/.coverage
+**/.pytest_cache/
+venv/
+.idea/

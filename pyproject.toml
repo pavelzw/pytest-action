@@ -1,0 +1,4 @@
+[tool.pytest.ini_options]
+pythonpath = [
+  "example_tests", "example_tests/src",
+]
