@@ -16,4 +16,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-md pytest-emoji
       - uses: pavelzw/pytest-action@v1

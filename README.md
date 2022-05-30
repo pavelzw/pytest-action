@@ -12,7 +12,7 @@ This GitHub Action allows you to run pytest and output [GitHub Job Summaries](ht
     custom_arguments: '-q'
 ```
 
-You need to have Python installed in your pipeline before you can run this action.
+You need to have Python as well as pytest installed in your pipeline before you can run this action. If `job_summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
 
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
@@ -49,6 +49,8 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install dependencies
+        run: pip install pytest pytest-md pytest-emoji
       - uses: pavelzw/pytest-action@test
         with:
           emoji: false
