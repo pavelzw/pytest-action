@@ -21,6 +21,14 @@ inputs:
     description: Custom arguments to pass to pytest
     required: false
     default: ''
+  report_title:
+    description: Title of the report
+    required: false
+    default: 'Test Report'
+  click_to_expand:
+    description: Add 'Click to expand' to the report
+    required: false
+    default: 'true'
 runs:
   using: "composite"
   steps:
@@ -39,5 +47,11 @@ runs:
     - name: Add report to summary
       # run even if pytest fails
       if: always() && inputs.job_summary == 'true'
-      run: cat report.md >> $GITHUB_STEP_SUMMARY
+      run: |
+        sed -i 's/# Test Report/# ${{ inputs.report_title }}/' report.md
+        if [ ${{ inputs.click_to_expand }} = true ]; then
+          sed -i '2i <details><summary>Click to expand!</summary>' report.md
+          sed -i '$a</details>' report.md
+        fi
+        cat report.md >> $GITHUB_STEP_SUMMARY
       shell: bash
