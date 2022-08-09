@@ -19,4 +19,4 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest pytest-md pytest-emoji
-      - uses: pavelzw/pytest-action@v1
+      - uses: pavelzw/pytest-action@v2

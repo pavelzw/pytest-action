@@ -5,7 +5,7 @@ branding:
   icon: file-text
   color: 'blue'
 inputs:
-  job_summary:
+  job-summary:
     description: Print a GitHub job summary
     required: false
     default: 'true'
@@ -17,15 +17,15 @@ inputs:
     description: Use emojis in the output
     required: false
     default: 'true'
-  custom_arguments:
+  custom-arguments:
     description: Custom arguments to pass to pytest
     required: false
     default: ''
-  report_title:
+  report-title:
     description: Title of the report
     required: false
     default: 'Test Report'
-  click_to_expand:
+  click-to-expand:
     description: Add 'Click to expand' to the report
     required: false
     default: 'true'
@@ -36,20 +36,20 @@ runs:
       run: |
         args=()
         if [ ${{ inputs.verbose }} = true ]; then args+=('-v'); fi
-        if [ ${{ inputs.job_summary }} = true ]; then args+=('--md=report.md'); fi
+        if [ ${{ inputs.job-summary }} = true ]; then args+=('--md=report.md'); fi
         if [ ${{ inputs.emoji }} = true ]; then args+=('--emoji'); fi
         # unpack custom arguments from spaces to array
-        args+=(`echo "${{ inputs.custom_arguments }}"`)
+        args+=(`echo "${{ inputs.custom-arguments }}"`)
         echo "::group::Run pytest ${args[@]}"
         pytest "${args[@]}"
         echo "::endgroup::"
       shell: bash -el {0}  # use login shell to source .bashrc for environments
     - name: Add report to summary
       # run even if pytest fails
-      if: always() && inputs.job_summary == 'true'
+      if: always() && inputs.job-summary == 'true'
       run: |
-        sed -i 's/# Test Report/# ${{ inputs.report_title }}/' report.md
-        if [ ${{ inputs.click_to_expand }} = true ]; then
+        sed -i 's/# Test Report/# ${{ inputs.report-title }}/' report.md
+        if [ ${{ inputs.click-to-expand }} = true ]; then
           sed -i '2i <details><summary>Click to expand!</summary>' report.md
           sed -i '$a</details>' report.md
         fi

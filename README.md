@@ -1,6 +1,6 @@
 # GitHub Action for pytest
 
-This GitHub Action allows you to run pytest and output [GitHub Job Summaries](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/). For creating the job summaries, this action uses [pytest-md](https://github.com/hackebrot/pytest-md) and [pytest-emoji](https://github.com/hackebrot/pytest-emoji).
+This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/). For creating the job summaries, this action uses [pytest-md](https://github.com/hackebrot/pytest-md) and [pytest-emoji](https://github.com/hackebrot/pytest-emoji).
 
 ```yaml
 - name: Run pytest
@@ -8,11 +8,11 @@ This GitHub Action allows you to run pytest and output [GitHub Job Summaries](ht
   with:
     verbose: true
     emoji: true
-    job_summary: true
-    custom_arguments: '-q'
+    job-summary: true
+    custom-arguments: '-q'
 ```
 
-You need to have Python as well as pytest installed in your pipeline before you can run this action. If `job_summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
+You need to have Python as well as `pytest` installed in your pipeline before you can run this action. If `job-summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
 
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
@@ -22,16 +22,16 @@ If you want to change the time zone of the job summary, you may want to use the 
     timezone: 'Europe/Berlin'
 ```
 
-When `job_summary` is set to `true`, the action will output a Job Summary.
+When `job-summary` is set to `true`, the action will output a Job Summary.
 ![Example Job Summary](https://user-images.githubusercontent.com/29506042/170843320-2bb104c5-5284-4fff-a83c-525da58a1a7f.png)
 
-## Activating conda environments
+## Activating `conda` environments
 
-This Action uses `bash -l {0}` as the shell to run pytest in, 
+This action uses `bash -l {0}` as the shell to run `pytest` in, 
 i.e., the login shell that also sources your `.bashrc`. 
 When using `bash` in GitHub Actions, it doesn't source your `.bashrc` by default. 
-If you want to use a conda environment, you need to make sure to add it into your `.bashrc` s.t. 
-the conda environment automatically gets activated. 
+If you want to use a `conda` environment, you need to make sure to add it into your `.bashrc` s.t. 
+the `conda` environment automatically gets activated. 
 [mamba-org/provision-with-micromamba](https://github.com/mamba-org/provision-with-micromamba) 
 does this automatically for you.
 
@@ -47,7 +47,7 @@ does this automatically for you.
       numpy
 - run: pip install pytest-md pytest-emoji
   shell: bash -l {0}
-- uses: pavelzw/pytest-action@v1
+- uses: pavelzw/pytest-action@v2
 ```
 
 ## Example Usage
@@ -76,9 +76,9 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
         run: pip install pytest pytest-md pytest-emoji
-      - uses: pavelzw/pytest-action@v1
+      - uses: pavelzw/pytest-action@v2
         with:
           emoji: false
           verbose: false
-          job_summary: true
+          job-summary: true
 ```
