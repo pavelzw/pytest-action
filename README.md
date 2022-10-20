@@ -10,6 +10,8 @@ This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](
     emoji: true
     job-summary: true
     custom-arguments: '-q'
+    click-to-expand: true
+    report-title: 'Test Report'
 ```
 
 You need to have Python as well as `pytest` installed in your pipeline before you can run this action. If `job-summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
