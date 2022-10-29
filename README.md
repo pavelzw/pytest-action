@@ -1,10 +1,10 @@
 # GitHub Action for pytest
 
-This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/). For creating the job summaries, this action uses [pytest-md](https://github.com/hackebrot/pytest-md) and [pytest-emoji](https://github.com/hackebrot/pytest-emoji).
+This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/). For creating the job summaries, this action uses [`pytest-md`](https://github.com/hackebrot/pytest-md) and [`pytest-emoji`](https://github.com/hackebrot/pytest-emoji).
 
 ```yaml
 - name: Run pytest
-  uses: pavelzw/pytest-action@v1
+  uses: pavelzw/pytest-action@v2
   with:
     verbose: true
     emoji: true
@@ -19,7 +19,7 @@ You need to have Python as well as `pytest` installed in your pipeline before yo
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
 - name: Set timezone
-  uses: szenius/set-timezone@v1
+  uses: szenius/set-timezone@v1.0
   with:
     timezone: 'Europe/Berlin'
 ```
@@ -47,8 +47,8 @@ does this automatically for you.
       python=3.7
       pytest
       numpy
-- run: pip install pytest-md pytest-emoji
-  shell: bash -l {0}
+      pytest-md
+      pytest-emoji
 - uses: pavelzw/pytest-action@v2
 ```
 
@@ -73,7 +73,7 @@ jobs:
           timezoneLinux: "Europe/Berlin"
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v3
+        uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
