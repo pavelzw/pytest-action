@@ -16,16 +16,20 @@ This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](
 
 You need to have Python as well as `pytest` installed in your pipeline before you can run this action. If `job-summary` is set to `true`, you also need to install `pytest-md`. If `emoji` is set to `true`, you need to install `pytest-emoji`.
 
+When `job-summary` is set to `true`, the action will output a Job Summary.
+
+![Example Job Summary](./.github/assets/summary-example-light.png#gh-light-mode-only)
+![Example Job Summary](./.github/assets/summary-example-dark.png#gh-dark-mode-only)
+
+## Setting time zone
+
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
 - name: Set timezone
-  uses: szenius/set-timezone@v1.0
+  uses: szenius/set-timezone@v1.1
   with:
     timezone: 'Europe/Berlin'
 ```
-
-When `job-summary` is set to `true`, the action will output a Job Summary.
-![Example Job Summary](https://user-images.githubusercontent.com/29506042/170843320-2bb104c5-5284-4fff-a83c-525da58a1a7f.png)
 
 ## Activating `conda` environments
 
@@ -68,7 +72,7 @@ jobs:
         python-version: ["3.6", "3.7", "3.8", "3.9"]
 
     steps:
-      - uses: szenius/set-timezone@v1.0
+      - uses: szenius/set-timezone@v1.1
         with:
           timezoneLinux: "Europe/Berlin"
       - uses: actions/checkout@v3
