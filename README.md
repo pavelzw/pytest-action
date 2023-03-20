@@ -21,6 +21,19 @@ When `job-summary` is set to `true`, the action will output a Job Summary.
 ![Example Job Summary](./.github/assets/summary-example-light.png#gh-light-mode-only)
 ![Example Job Summary](./.github/assets/summary-example-dark.png#gh-dark-mode-only)
 
+<!-- action-docs-inputs -->
+## Inputs
+
+| parameter | description | required | default |
+| --- | --- | --- | --- |
+| job-summary | Print a GitHub job summary | `false` | true |
+| verbose | Verbose output | `false` | true |
+| emoji | Use emojis in the output | `false` | true |
+| custom-arguments | Custom arguments to pass to pytest | `false` |  |
+| report-title | Title of the report | `false` | Test Report |
+| click-to-expand | Add 'Click to expand' to the report | `false` | true |
+<!-- action-docs-inputs -->
+
 ## Setting time zone
 
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
