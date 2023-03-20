@@ -30,6 +30,7 @@ When `job-summary` is set to `true`, the action will output a Job Summary.
 | verbose | Verbose output | `false` | true |
 | emoji | Use emojis in the output | `false` | true |
 | custom-arguments | Custom arguments to pass to pytest | `false` |  |
+| custom-pytest | Custom command to replace the `pytest` call. Can be a custom executable or something like `poetry run pytest` or `micromamba run -n myenv pytest`. | `false` | pytest |
 | report-title | Title of the report | `false` | Test Report |
 | click-to-expand | Add 'Click to expand' to the report | `false` | true |
 <!-- action-docs-inputs -->
