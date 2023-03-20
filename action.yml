@@ -21,6 +21,10 @@ inputs:
     description: Custom arguments to pass to pytest
     required: false
     default: ''
+  custom-pytest:
+    description: Custom command to replace the `pytest` call. Can be a custom executable or something like `poetry run pytest` or `micromamba run -n myenv pytest`.
+    required: false
+    default: 'pytest'
   report-title:
     description: Title of the report
     required: false
@@ -41,7 +45,7 @@ runs:
         # unpack custom arguments from spaces to array
         args+=(`echo "${{ inputs.custom-arguments }}"`)
         echo "::group::Run pytest ${args[@]}"
-        pytest "${args[@]}"
+        ${{ inputs.custom-pytest }} "${args[@]}"
         echo "::endgroup::"
       shell: bash -el {0}  # use login shell to source .bashrc for environments
     - name: Add report to summary
