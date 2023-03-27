@@ -40,7 +40,7 @@ When `job-summary` is set to `true`, the action will output a Job Summary.
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
 ```yaml
 - name: Set timezone
-  uses: szenius/set-timezone@v1.1
+  uses: szenius/set-timezone@v1.2
   with:
     timezone: 'Europe/Berlin'
 ```
@@ -86,7 +86,7 @@ jobs:
         python-version: ["3.6", "3.7", "3.8", "3.9"]
 
     steps:
-      - uses: szenius/set-timezone@v1.1
+      - uses: szenius/set-timezone@v1.2
         with:
           timezoneLinux: "Europe/Berlin"
       - uses: actions/checkout@v3
