@@ -20,3 +20,23 @@ jobs:
         run: |
           pip install pytest pytest-md pytest-emoji
       - uses: pavelzw/pytest-action@v2
+
+  test-micromamba:
+    name: Run tests (micromamba)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: 'Europe/Berlin'
+      - uses: actions/checkout@v3
+      - name: Set up micromamba environment
+        uses: mamba-org/setup-micromamba@v1
+        with:
+          environment-name: myenv
+          create-args: >-
+            python=3.11
+            pytest
+            pytest-md
+            pytest-emoji
+      - uses: pavelzw/pytest-action@v2
