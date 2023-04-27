@@ -52,17 +52,15 @@ i.e., the login shell that also sources your `.bashrc`.
 When using `bash` in GitHub Actions, it doesn't source your `.bashrc` by default. 
 If you want to use a `conda` environment, you need to make sure to add it into your `.bashrc` s.t. 
 the `conda` environment automatically gets activated. 
-[mamba-org/provision-with-micromamba](https://github.com/mamba-org/provision-with-micromamba) 
+[mamba-org/setup-micromamba](https://github.com/mamba-org/setup-micromamba) 
 does this automatically for you.
 
 ```bash
-- uses: mamba-org/provision-with-micromamba@main
+- uses: mamba-org/setup-micromamba@v1
   with:
     environment-name: myenv
-    channels: conda-forge
-    environment-file: false
-    extra-specs: |
-      python=3.7
+    create-args: >-
+      python=3.11
       pytest
       numpy
       pytest-md
