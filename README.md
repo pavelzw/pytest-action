@@ -2,7 +2,7 @@
 
 This GitHub Action allows you to run `pytest` and output [GitHub Job Summaries](https://github.blog/2022-05-09-supercharging-github-actions-with-job-summaries/). For creating the job summaries, this action uses [`pytest-md`](https://github.com/hackebrot/pytest-md) and [`pytest-emoji`](https://github.com/hackebrot/pytest-emoji).
 
-```yaml
+```yml
 - name: Run pytest
   uses: pavelzw/pytest-action@v2
   with:
@@ -38,7 +38,7 @@ When `job-summary` is set to `true`, the action will output a Job Summary.
 ## Setting time zone
 
 If you want to change the time zone of the job summary, you may want to use the [szenius/set-timezone](https://github.com/marketplace/actions/set-timezone) action:
-```yaml
+```yml
 - name: Set timezone
   uses: szenius/set-timezone@v1.2
   with:
@@ -55,7 +55,7 @@ the `conda` environment automatically gets activated.
 [mamba-org/setup-micromamba](https://github.com/mamba-org/setup-micromamba) 
 does this automatically for you.
 
-```bash
+```yml
 - uses: mamba-org/setup-micromamba@v1
   with:
     environment-name: myenv
@@ -70,7 +70,7 @@ does this automatically for you.
 
 ## Example Usage
 
-```yaml
+```yml
 name: Run Python tests
 
 on: [push]
