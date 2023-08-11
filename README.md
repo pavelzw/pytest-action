@@ -48,9 +48,9 @@ If you want to change the time zone of the job summary, you may want to use the 
 ## Activating `conda` environments
 
 This action uses `bash -l {0}` as the shell to run `pytest` in, 
-i.e., the login shell that also sources your `.bashrc`. 
-When using `bash` in GitHub Actions, it doesn't source your `.bashrc` by default. 
-If you want to use a `conda` environment, you need to make sure to add it into your `.bashrc` s.t. 
+i.e., the login shell that also sources your `.bash_profile`. 
+When using `bash` in GitHub Actions, it doesn't source your `.bash_profile` by default. 
+If you want to use a `conda` environment, you need to make sure to add it into your `.bash_profile` s.t. 
 the `conda` environment automatically gets activated. 
 [mamba-org/setup-micromamba](https://github.com/mamba-org/setup-micromamba) 
 does this automatically for you.
