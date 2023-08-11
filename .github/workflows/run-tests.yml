@@ -4,13 +4,13 @@ on: push
 
 jobs:
   test:
-    name: Run tests
-    runs-on: ubuntu-latest
+    name: Run tests (setup-python)
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: szenius/set-timezone@v1.2
-        with:
-          timezoneLinux: 'Europe/Berlin'
       - uses: actions/checkout@v3
       - name: Set up Python 3.x
         uses: actions/setup-python@v4
@@ -19,24 +19,25 @@ jobs:
       - name: Install dependencies
         run: |
           pip install pytest pytest-md pytest-emoji
-      - uses: pavelzw/pytest-action@v2
+      - uses: ./.
 
   test-micromamba:
-    name: Run tests (micromamba)
-    runs-on: ubuntu-latest
+    name: Run tests (setup-micromamba)
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: szenius/set-timezone@v1.2
-        with:
-          timezoneLinux: 'Europe/Berlin'
       - uses: actions/checkout@v3
       - name: Set up micromamba environment
         uses: mamba-org/setup-micromamba@v1
         with:
           environment-name: myenv
+          cache-environment: true
           create-args: >-
-            python=3.11
+            python
             pytest
             pytest-md
             pytest-emoji
-      - uses: pavelzw/pytest-action@v2
+      - uses: ./.
