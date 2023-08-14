@@ -37,11 +37,14 @@ runs:
   using: "composite"
   steps:
     - name: Run pytest
+      id: pytest
       run: |
         echo "::group::..."
+        REPORT="$(mktemp)"
+        echo "report-path=$REPORT" >> $GITHUB_OUTPUT
         args=()
         if [ ${{ inputs.verbose }} = true ]; then args+=('-v'); fi
-        if [ ${{ inputs.job-summary }} = true ]; then args+=('--md=report.md'); fi
+        if [ ${{ inputs.job-summary }} = true ]; then args+=('--md="$REPORT"'); fi
         if [ ${{ inputs.emoji }} = true ]; then args+=('--emoji'); fi
         # unpack custom arguments from spaces to array
         args+=(`echo "${{ inputs.custom-arguments }}"`)
@@ -53,15 +56,16 @@ runs:
       if: always() && inputs.job-summary == 'true'
       run: |
         echo "::group::..."
-        echo "# ${{ inputs.report-title }}" > final_report.md
+        FINAL_REPORT="$(mktemp)"
+        echo "# ${{ inputs.report-title }}" > "$FINAL_REPORT"
         if [ ${{ inputs.click-to-expand }} = true ]; then
-          echo "<details><summary>Click to expand!</summary>" >> final_report.md
+          echo "<details><summary>Click to expand!</summary>" >> "$FINAL_REPORT"
         fi
-        tail -n+2 report.md >> final_report.md
+        tail -n+2 "${{ steps.pytest.outputs.report-path }}" >> "$FINAL_REPORT"
         if [ ${{ inputs.click-to-expand }} = true ]; then
-          echo "</details>" >> final_report.md
+          echo "</details>" >> "$FINAL_REPORT"
         fi
-        cat final_report.md >> $GITHUB_STEP_SUMMARY
+        cat "$FINAL_REPORT" >> "$GITHUB_STEP_SUMMARY"
         echo "::endgroup::"
         echo
         echo "====================================================================================="
