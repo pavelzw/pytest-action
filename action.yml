@@ -44,7 +44,7 @@ runs:
         echo "report-path=$REPORT" >> $GITHUB_OUTPUT
         args=()
         if [ ${{ inputs.verbose }} = true ]; then args+=('-v'); fi
-        if [ ${{ inputs.job-summary }} = true ]; then args+=("--md=\"$REPORT\""); fi
+        if [ ${{ inputs.job-summary }} = true ]; then args+=("--md=$REPORT"); fi
         if [ ${{ inputs.emoji }} = true ]; then args+=('--emoji'); fi
         # unpack custom arguments from spaces to array
         args+=(`echo "${{ inputs.custom-arguments }}"`)
