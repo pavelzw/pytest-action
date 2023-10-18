@@ -39,17 +39,9 @@ runs:
     - name: Run pytest
       id: pytest
       run: |
-        echo "::group::..."
         REPORT="$(mktemp)"
         echo "report-path=$REPORT" >> $GITHUB_OUTPUT
-        args=()
-        if [ ${{ inputs.verbose }} = true ]; then args+=('-v'); fi
-        if [ ${{ inputs.job-summary }} = true ]; then args+=("--md=$REPORT"); fi
-        if [ ${{ inputs.emoji }} = true ]; then args+=('--emoji'); fi
-        # unpack custom arguments from spaces to array
-        args+=(`echo "${{ inputs.custom-arguments }}"`)
-        echo "::endgroup::"
-        ${{ inputs.custom-pytest }} "${args[@]}"
+        ${{ inputs.custom-pytest }}${{ inputs.verbose == 'true' && ' -v' || '' }}${{ inputs.job-summary == 'true' && ' --md=$REPORT' || '' }}${{ inputs.emoji == 'true' && ' --emoji' || '' }}${{ inputs.custom-arguments != '' && ' ' || '' }}${{ inputs.custom-arguments }}
       shell: bash -el {0}  # use login shell to source .bashrc for environments
     - name: Add report to summary
       # run even if pytest fails
