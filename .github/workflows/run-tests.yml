@@ -21,6 +21,26 @@ jobs:
           pip install pytest pytest-md pytest-emoji
       - uses: ./.
 
+  quotes:
+    name: Test quotes
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: |
+          pip install pytest pytest-md pytest-emoji
+      - uses: ./.
+        with:
+          custom-arguments: -k "not failed"
+
   test-micromamba:
     name: Run tests (setup-micromamba)
     strategy:
