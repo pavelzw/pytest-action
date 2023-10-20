@@ -39,6 +39,7 @@ runs:
     - name: Run pytest
       id: pytest
       run: |
+        set -x
         REPORT="$(mktemp)"
         echo report-path="$REPORT" >> $GITHUB_OUTPUT
         ${{ inputs.custom-pytest }}${{ inputs.verbose == 'true' && ' -v' || '' }}${{ inputs.job-summary == 'true' && ' --md="$REPORT"' || '' }}${{ inputs.emoji == 'true' && ' --emoji' || '' }}${{ inputs.custom-arguments != '' && ' ' || '' }}${{ inputs.custom-arguments }}
