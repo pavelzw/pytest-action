@@ -21,6 +21,33 @@ jobs:
           pip install pytest pytest-md pytest-emoji
       - uses: ./.
 
+  test-issue:
+    runs-on: "ubuntu-latest"
+    strategy:
+      matrix:
+        python-version: ["3.12", "3.11", "3.10", "3.9"]
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v5
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install dependencies
+      run: |
+        python3 -m pip install --upgrade pip
+        pip3 install pytest pytest-emoji
+        if [ -f requirements.txt ]; then pip3 install -r requirements.txt; fi
+
+    - name: Test code with pytest
+      uses: pavelzw/pytest-action@v2
+      with:
+        emoji: true
+        verbose: false
+        job-summary: true
+
   quotes:
     name: Test quotes
     strategy:
