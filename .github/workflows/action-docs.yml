@@ -9,7 +9,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: npalm/action-docs-action@v1.4.0
+      - uses: npalm/action-docs-action@v2.0.0
       - name: Assert there are no changes in README.me
         run: |
           git diff --exit-code
