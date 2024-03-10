@@ -39,10 +39,11 @@ runs:
     - name: Run pytest
       id: pytest
       run: |
+        set -x
         REPORT="$(mktemp)"
-        echo "report-path=$REPORT" >> $GITHUB_OUTPUT
-        ${{ inputs.custom-pytest }}${{ inputs.verbose == 'true' && ' -v' || '' }}${{ inputs.job-summary == 'true' && ' --md=$REPORT' || '' }}${{ inputs.emoji == 'true' && ' --emoji' || '' }}${{ inputs.custom-arguments != '' && ' ' || '' }}${{ inputs.custom-arguments }}
-      shell: bash -el {0}  # use login shell to source .bashrc for environments
+        echo report-path="$REPORT" >> $GITHUB_OUTPUT
+        ${{ inputs.custom-pytest }}${{ inputs.verbose == 'true' && ' -v' || '' }}${{ inputs.job-summary == 'true' && ' --md="$REPORT"' || '' }}${{ inputs.emoji == 'true' && ' --emoji' || '' }}${{ inputs.custom-arguments != '' && ' ' || '' }}${{ inputs.custom-arguments }}
+      shell: bash -el {0}  # use login shell to source .bash_profile for environments
     - name: Add report to summary
       # run even if pytest fails
       if: always() && inputs.job-summary == 'true'

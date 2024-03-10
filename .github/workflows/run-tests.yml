@@ -61,3 +61,18 @@ jobs:
             pytest-md
             pytest-emoji
       - uses: ./.
+
+  test-pixi:
+    name: Run tests (setup-pixi)
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up micromamba environment
+        uses: prefix-dev/setup-pixi@v0.3.0
+      - uses: ./.
+        with:
+          custom-pytest: pixi run pytest
